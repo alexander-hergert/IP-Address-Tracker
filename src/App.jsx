@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import InputSection from "./components/InputSection";
 import OutputSection from "./components/OutputSection";
-import MapSection from "./components/mapSection";
+import MapSection from "./components/MapSection";
 
 function App() {
   const [data, setData] = useState({
