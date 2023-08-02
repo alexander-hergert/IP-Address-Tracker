@@ -10,15 +10,24 @@ const activeColor = "hsl(0, 0%, 17%)";
 
 const Section = styled.section`
   padding: 4em;
+  padding-top: 1rem;
   background-image: url("/assets/images/pattern-bg-desktop.png");
   background-repeat: no-repeat;
   background-size: cover;
   text-align: center;
   height: 25vh;
+
+  @media (max-width: 880px) {
+    background-image: url("/assets/images/pattern-bg-mobile.png");
+  }
 `;
 
 const H1 = styled.h1`
   color: white;
+
+  @media (max-width: 880px) {
+    font-size: 1.5rem;
+  }
 `;
 
 const Form = styled.form`
@@ -27,15 +36,24 @@ const Form = styled.form`
 
 const Input = styled.input`
   padding: 1rem;
-  width: 30%;
+  width: 35%;
   border-top-left-radius: ${cornerSize};
   border-bottom-left-radius: ${cornerSize};
+  border: none;
+  &:hover {
+    cursor: pointer;
+  }
+
+  @media (max-width: 880px) {
+    width: 60%;
+  }
 `;
 
 const Button = styled.button`
   background-color: black;
+  border: none;
   color: white;
-  padding: 1rem;
+  padding: 1rem 1.5rem;
   border-top-right-radius: ${cornerSize};
   border-bottom-right-radius: ${cornerSize};
   &:hover {
@@ -74,7 +92,7 @@ const InputSection = ({ setData }) => {
     const initialFetch = async () => {
       const ownIp = await fetchData(ipUrl);
       const initialUrl = `https://geo.ipify.org/api/v2/country,city?apiKey=${apiKey}&ipAddress=${ownIp.ip}`;
-      //fetchAndSet(initialUrl);
+      fetchAndSet(initialUrl);
     };
     initialFetch();
   }, []);
@@ -86,6 +104,7 @@ const InputSection = ({ setData }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     fetchAndSet(url);
+    e.target[0].value = "";
   };
 
   return (

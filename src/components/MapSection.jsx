@@ -5,7 +5,7 @@ import L from "leaflet";
 /***********************Styles*************************/
 
 const Div = styled.div`
-  height: 55vh;
+  height: 65vh;
 `;
 
 /***********************Component*************************/

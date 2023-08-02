@@ -5,12 +5,12 @@ import MapSection from "./components/MapSection";
 
 function App() {
   const [data, setData] = useState({
-    ip: "...loading",
-    region: "...loading",
-    city: "...loading",
-    postalCode: "...loading",
-    timezone: "...loading",
-    isp: "...loading",
+    ip: "---",
+    region: "---",
+    city: "---",
+    postalCode: "---",
+    timezone: "---",
+    isp: "---",
     lat: "",
     lng: "",
   });
