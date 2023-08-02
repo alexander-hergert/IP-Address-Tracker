@@ -10,7 +10,7 @@ const activeColor = "hsl(0, 0%, 17%)";
 
 const Section = styled.section`
   padding: 4em;
-  background-image: url("../src/assets/images/pattern-bg-desktop.png");
+  background-image: url("../public/assets/images/pattern-bg-desktop.png");
   background-repeat: no-repeat;
   background-size: cover;
   text-align: center;
@@ -98,7 +98,7 @@ const InputSection = ({ setData }) => {
           placeholder="Search for any IP address or domain"
         />
         <Button>
-          <img src="../src/assets/images/icon-arrow.svg" alt="icon" />
+          <img src="../public/assets/images/icon-arrow.svg" alt="icon" />
         </Button>
       </Form>
     </Section>
