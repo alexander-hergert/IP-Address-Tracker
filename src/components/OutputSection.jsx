@@ -1,6 +1,7 @@
 import React from "react";
 import { styled } from "styled-components";
 
+
 /***********************Styles*************************/
 
 const Section = styled.section`
@@ -15,33 +16,36 @@ const Section = styled.section`
   background-color: white;
   width: 80%;
   border-radius: 1rem;
+  z-index: 1000;
 `;
 
-const Div = styled.section`
+const Div = styled.div`
   display: flex;
   flex-direction: column;
 `;
 
-//Styles
+/***********************Component*************************/
 
-const OutputSection = () => {
+const OutputSection = ({ data }) => {
+  
+
   return (
     <Section>
       <Div>
         <p>IP Address</p>
-        <p>192.212.174.101</p>
+        <p>{data.ip}</p>
       </Div>
       <Div>
         <p>Location</p>
-        <p>Brooklyn, NY 10001</p>
+        <p>{`${data.region}, ${data.city}, ${data.postalCode}`}</p>
       </Div>
       <Div>
         <p>Timezone</p>
-        <p>UTC-05:00</p>
+        <p>{data.timezone}</p>
       </Div>
       <Div>
         <p>ISP</p>
-        <p>SpaceX Starlink</p>
+        <p>{data.isp}</p>
       </Div>
     </Section>
   );
