@@ -20,7 +20,7 @@ const MapSection = ({ data }) => {
     }).addTo(map);
 
     const customIcon = L.icon({
-      iconUrl: "../public/assets/images/icon-location.svg",
+      iconUrl: "/assets/images/icon-location.svg",
       iconSize: [32, 32],
     });
 
