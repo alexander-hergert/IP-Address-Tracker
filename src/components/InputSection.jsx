@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import fetchData from "../fetchData";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import showErrorToast from "../error";
 
 /***********************Styles*************************/
 //variables
@@ -45,7 +48,7 @@ const Input = styled.input`
   }
 
   @media (max-width: 880px) {
-    width: 60%;
+    width: 55%;
   }
 `;
 
@@ -94,7 +97,7 @@ const InputSection = ({ setData }) => {
       const initialUrl = `https://geo.ipify.org/api/v2/country,city?apiKey=${apiKey}&ipAddress=${ownIp.ip}`;
       fetchAndSet(initialUrl);
     };
-    initialFetch();
+    //initialFetch();
   }, []);
 
   const handleChange = (e) => {
@@ -103,12 +106,23 @@ const InputSection = ({ setData }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    fetchAndSet(url);
-    e.target[0].value = "";
+    const ipv4Regex =
+      /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
+    const ipv6Regex =
+      /^(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,6}:|:[0-9a-fA-F]{1,4}|::)$/i;
+    if (ipv4Regex.test(inputIp) || ipv6Regex.test(inputIp)) {
+      fetchAndSet(url);
+      e.target[0].value = "";
+      setInputIp("");
+    } else {
+      const errorMessage = "Invalid Ipv4 or Ipv6 address.";
+      showErrorToast(errorMessage);
+    }
   };
 
   return (
     <Section>
+      <ToastContainer />
       <H1>IP Address Tracker</H1>
       <Form onSubmit={handleSubmit}>
         <Input

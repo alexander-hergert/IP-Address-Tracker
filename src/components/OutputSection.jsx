@@ -15,7 +15,7 @@ const Section = styled.section`
   transform: translateX(-50%);
   padding: 2rem;
   background-color: white;
-  width: 60%;
+  width: 57%;
   border-radius: 1rem;
   z-index: 1000;
 
@@ -27,7 +27,7 @@ const Section = styled.section`
   }
 
   @media (max-width: 400px) {
-    top: 22%;
+    top: 23%;
   }
 `;
 
