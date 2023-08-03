@@ -73,11 +73,8 @@ const InputSection = ({ setData, setIsLoading }) => {
   /*********************FETCHING **************************/
   const fetchAndSet = async (ip) => {
     const myDataCookie = getCookie("ipAddressTracker");
-    if (myDataCookie) {
-      const cookieData = JSON.parse(myDataCookie);
-      setData(cookieData);
-      setIsLoading(false);
-    } else {
+    const cookieData = JSON.parse(myDataCookie);
+    if (cookieData?.ip !== ip) {
       const data = await fetchData(ip);
       const values = {
         ip: data.ip,
@@ -89,8 +86,14 @@ const InputSection = ({ setData, setIsLoading }) => {
         lat: data.location.lat,
         lng: data.location.lng,
       };
-      createCookie("ipAddressTracker", JSON.stringify(values), 1);
+      if (cookieData === null) {
+        //handle the search without making new cookie
+        createCookie("ipAddressTracker", JSON.stringify(values), 1);
+      }
       setData(values);
+      setIsLoading(false);
+    } else {
+      setData(cookieData);
       setIsLoading(false);
     }
   };

@@ -69,27 +69,28 @@ const P = styled.p`
 /***********************Component*************************/
 
 const OutputSection = ({ data, isLoading }) => {
+  const { ip, region, city, postalCode, timezone, isp } = data;
   return (
     <Section>
       <Div>
         <P>Ip Address</P>
-        {isLoading ? <Loader /> : <p>{data.ip}</p>}
+        {isLoading ? <Loader /> : <p>{ip}</p>}
       </Div>
       <Div>
         <P>Location</P>
         {isLoading ? (
           <Loader />
         ) : (
-          <p>{`${data.region}, ${data.city}, ${data.postalCode}`}</p>
+          <p>{`${region}, ${city}, ${postalCode}`}</p>
         )}
       </Div>
       <Div>
         <P>Timezone</P>
-        {isLoading ? <Loader /> : <p>{`UTC ${data.timezone}`}</p>}
+        {isLoading ? <Loader /> : <p>{`UTC ${timezone}`}</p>}
       </Div>
       <Div>
         <P>ISP</P>
-        {isLoading ? <Loader /> : <p>{data.isp}</p>}
+        {isLoading ? <Loader /> : <p>{isp}</p>}
       </Div>
     </Section>
   );
