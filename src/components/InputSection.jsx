@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
-//import fetchData from "../fetchData";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import showErrorToast from "../error";
+import showErrorToast from "../utility/error";
+import { getCookie, createCookie } from "../utility/cookies";
 
 /***********************Styles*************************/
 //variables
@@ -67,22 +67,32 @@ const Button = styled.button`
 
 /***********************Component*************************/
 
-const InputSection = ({ setData }) => {
+const InputSection = ({ setData, setIsLoading }) => {
   const [inputIp, setInputIp] = useState("");
 
+  /*********************FETCHING **************************/
   const fetchAndSet = async (ip) => {
-    const data = await fetchData(ip);
-    const values = {
-      ip: data.ip,
-      region: data.location.region,
-      city: data.location.city,
-      postalCode: data.location.postalCode,
-      timezone: data.location.timezone,
-      isp: data.isp,
-      lat: data.location.lat,
-      lng: data.location.lng,
-    };
-    setData(values);
+    const myDataCookie = getCookie("ipAddressTracker");
+    if (myDataCookie) {
+      const cookieData = JSON.parse(myDataCookie);
+      setData(cookieData);
+      setIsLoading(false);
+    } else {
+      const data = await fetchData(ip);
+      const values = {
+        ip: data.ip,
+        region: data.location.region,
+        city: data.location.city,
+        postalCode: data.location.postalCode,
+        timezone: data.location.timezone,
+        isp: data.isp,
+        lat: data.location.lat,
+        lng: data.location.lng,
+      };
+      createCookie("ipAddressTracker", JSON.stringify(values), 1);
+      setData(values);
+      setIsLoading(false);
+    }
   };
 
   const fetchData = async (ip) => {
@@ -110,12 +120,14 @@ const InputSection = ({ setData }) => {
     initialFetch();
   }, []);
 
+  /***************************HANDLERS *****************************/
   const handleChange = (e) => {
     setInputIp(e.target.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    //Input Validation
     const ipv4Regex =
       /^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
     const ipv6Regex =

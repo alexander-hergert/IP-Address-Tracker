@@ -3,17 +3,16 @@ import { styled } from "styled-components";
 import L from "leaflet";
 
 /***********************Styles*************************/
-
 const Div = styled.div`
   height: 65vh;
 `;
-
 /***********************Component*************************/
 
 const MapSection = ({ data }) => {
+  const { lat = 0, lng = 0 } = data;
   //Set the map
   useEffect(() => {
-    const map = L.map("map").setView([data.lat, data.lng], 13);
+    const map = L.map("map").setView([lat, lng], 13);
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       maxZoom: 19,
       attribution: "© OpenStreetMap",
@@ -24,7 +23,7 @@ const MapSection = ({ data }) => {
       iconSize: [32, 32],
     });
 
-    L.marker([data.lat, data.lng], { icon: customIcon })
+    L.marker([lat, lng], { icon: customIcon })
       .addTo(map)
       .bindPopup("Hello, this is a custom marker!");
 

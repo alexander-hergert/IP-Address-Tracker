@@ -1,5 +1,6 @@
 import React from "react";
 import { styled } from "styled-components";
+import Loader from "./Loader";
 
 /***********************Styles*************************/
 //variables
@@ -27,7 +28,7 @@ const Section = styled.section`
   }
 
   @media (max-width: 400px) {
-    top: 23%;
+    top: 25%;
   }
 `;
 
@@ -67,24 +68,28 @@ const P = styled.p`
 
 /***********************Component*************************/
 
-const OutputSection = ({ data }) => {
+const OutputSection = ({ data, isLoading }) => {
   return (
     <Section>
       <Div>
         <P>Ip Address</P>
-        <p>{data.ip}</p>
+        {isLoading ? <Loader /> : <p>{data.ip}</p>}
       </Div>
       <Div>
         <P>Location</P>
-        <p>{`${data.region}, ${data.city}, ${data.postalCode}`}</p>
+        {isLoading ? (
+          <Loader />
+        ) : (
+          <p>{`${data.region}, ${data.city}, ${data.postalCode}`}</p>
+        )}
       </Div>
       <Div>
         <P>Timezone</P>
-        <p>{`UTC ${data.timezone}`}</p>
+        {isLoading ? <Loader /> : <p>{`UTC ${data.timezone}`}</p>}
       </Div>
       <Div>
         <P>ISP</P>
-        <p>{data.isp}</p>
+        {isLoading ? <Loader /> : <p>{data.isp}</p>}
       </Div>
     </Section>
   );
