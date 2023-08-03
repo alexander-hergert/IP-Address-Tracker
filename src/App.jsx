@@ -2,19 +2,8 @@ import React, { useEffect, useState } from "react";
 import InputSection from "./components/InputSection";
 import OutputSection from "./components/OutputSection";
 import MapSection from "./components/MapSection";
-import axios from "axios";
 
 function App() {
-  //test
-  const fetchData = async () => {
-    const results = await axios.get("/.netlify/functions/helloWorld");
-    console.log(results);
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   const [data, setData] = useState({
     ip: "---",
     region: "---",

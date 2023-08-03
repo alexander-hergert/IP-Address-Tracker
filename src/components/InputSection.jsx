@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
-import fetchData from "../fetchData";
+//import fetchData from "../fetchData";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import showErrorToast from "../error";
@@ -67,16 +67,11 @@ const Button = styled.button`
 
 /***********************Component*************************/
 
-const apiKey = import.meta.env.VITE_API_KEY;
-
 const InputSection = ({ setData }) => {
   const [inputIp, setInputIp] = useState("");
 
-  const url = `https://geo.ipify.org/api/v2/country,city?apiKey=${apiKey}&ipAddress=${inputIp}`;
-  const ipUrl = "https://api.ipify.org/?format=json";
-
-  const fetchAndSet = async (url) => {
-    const data = await fetchData(url);
+  const fetchAndSet = async (ip) => {
+    const data = await fetchData(ip);
     const values = {
       ip: data.ip,
       region: data.location.region,
@@ -90,14 +85,29 @@ const InputSection = ({ setData }) => {
     setData(values);
   };
 
+  const fetchData = async (ip) => {
+    try {
+      const response = await fetch(`/.netlify/functions/getData?param=${ip}`);
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      showErrorToast();
+    }
+  };
+
   //Initial load
+  const ipUrl = "https://api.ipify.org/?format=json";
   useEffect(() => {
     const initialFetch = async () => {
-      const ownIp = await fetchData(ipUrl);
-      const initialUrl = `https://geo.ipify.org/api/v2/country,city?apiKey=${apiKey}&ipAddress=${ownIp.ip}`;
-      fetchAndSet(initialUrl);
+      try {
+        const response = await fetch(ipUrl);
+        const data = await response.json();
+        fetchAndSet(data.ip);
+      } catch (error) {
+        console.log(error.message);
+      }
     };
-    //initialFetch();
+    initialFetch();
   }, []);
 
   const handleChange = (e) => {
@@ -111,7 +121,7 @@ const InputSection = ({ setData }) => {
     const ipv6Regex =
       /^(([0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,6}:|:[0-9a-fA-F]{1,4}|::)$/i;
     if (ipv4Regex.test(inputIp) || ipv6Regex.test(inputIp)) {
-      fetchAndSet(url);
+      fetchAndSet(inputIp);
       e.target[0].value = "";
       setInputIp("");
     } else {

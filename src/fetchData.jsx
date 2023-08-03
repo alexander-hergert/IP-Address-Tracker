@@ -1,13 +1,18 @@
 import showErrorToast from "./error";
 
-const fetchData = async (url) => {
+const fetchData = async (param) => {
   try {
-    const response = await fetch(url);
+    const response = await fetch(
+      `/.netlify/functions/getData?param=${param}`
+    );
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
     const data = await response.json();
-    return data;
+    //console.log(data);
   } catch (error) {
-    const errorMessage = "something went wrong...";
-    showErrorToast(errorMessage);
+    console.error(error);
+    showErrorToast();
   }
 };
 
