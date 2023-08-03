@@ -149,11 +149,12 @@ const InputSection = ({ setData, setIsLoading }) => {
     <Section>
       <ToastContainer />
       <H1>IP Address Tracker</H1>
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} aria-label="Search Form">
         <Input
           onChange={handleChange}
           type="text"
           placeholder="Search for any IP address or domain"
+          aria-label="Search for any IP address or domain"
         />
         <Button>
           <img src="/assets/images/icon-arrow.svg" alt="icon" />
